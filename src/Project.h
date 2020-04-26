@@ -19,6 +19,7 @@ class Assignment
 public:
 	Assignment();
 	Assignment(string, string, double);
+	friend class Grade;
 
 private:
 	string type; // Types: HW, Quizzes, Exams
