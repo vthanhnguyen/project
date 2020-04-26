@@ -160,7 +160,6 @@ void Grade::addData()
 			insert(Final, n);
 		}
 
-
 		cout << "Enter a positive number to add another assignment\nEnter a negitive number to stop.\n";
 		cin >> choice;
 	}while(choice >= 0);
