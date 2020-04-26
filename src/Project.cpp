@@ -145,17 +145,20 @@ void Grade::addData()
 
 		if(type == "hw")
 		{
-
+			insert(HW, n);
 		}
 		if(type == "quiz")
 		{
-
+			insert(Quizzes, n);
 		}
 		if(type == "exam")
 		{
-
+			insert(Exams, n);
 		}
-
+		if(type == "final")
+		{
+			insert(Final, n);
+		}
 
 
 		cout << "Enter a positive number to add another assignment\nEnter a negitive number to stop.\n";
