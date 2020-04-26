@@ -20,7 +20,6 @@ public:
 	Assignment();
 	Assignment(string, string, double);
 
-private:
 	string type; // Types: HW, Quizzes, Exams
 	string name; // Name of assignment
 	double score; // Percent of the assignment
@@ -30,7 +29,8 @@ private:
 class node : public Assignment
 {
 public:
-	node *next;
+	node* next;
+
 };
 
 class Grade
