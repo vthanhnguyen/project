@@ -97,9 +97,71 @@ void Grade::insert(node *head, node *newp)
 	}
 
 }
-
+// Adds the data to the correct spot and appends it to the file
+// Function will request what type of assignment, the name you want to give it, and the score.
+// Score format: Either in percentages (Ex: 69%) or Score/Total (Ex: 15/20)
 void Grade::addData()
 {
+	string type,name;
+	double score;
+	int choice, in;
+	do
+	{
+		//get user inputs
+		cout << "Enter 1 for assignment type homework\n"
+			 << "Enter 2 for assignment type quiz\n"
+			 << "Enter 3 for assignment type exam\n"
+			 << "Enter 4 for assignment type final\n";
+		cin >> in;
+		if(in == 1)
+		{
+			type = "hw";
+		}
+		if(in == 2)
+		{
+			type = "quiz";
+		}
+		if(in == 3)
+		{
+			type = "exam";
+		}
+		if(in == 4)
+		{
+			type = "final";
+		}
+
+
+		cout << "Enter the name of the assignment(quiz #1, etc.): ";
+		cin >> name;
+
+		cout << "Enter the percent of the assignment(.67=67%, 3/4c): ";
+		cin >> score;
+
+		//create new node and assign data
+		node* n = new node; //create a new node and populate
+		n->next = NULL;
+		n->type = type;
+		n->name = name;
+
+		if(type == "hw")
+		{
+
+		}
+		if(type == "quiz")
+		{
+
+		}
+		if(type == "exam")
+		{
+
+		}
+
+
+
+		cout << "Enter a positive number to add another assignment\nEnter a negitive number to stop.\n";
+		cin >> choice;
+	}while(choice >= 0);
+
 
 }
 
