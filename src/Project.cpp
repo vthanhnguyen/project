@@ -95,6 +95,7 @@ void Grade::insert(node *head, node *newp)
 		newp->next = head;
 		head = newp;
 	}
+
 }
 
 void Grade::addData()

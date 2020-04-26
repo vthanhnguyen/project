@@ -5,6 +5,7 @@
  *
  */
 
+
 #ifndef PROJECT_H_
 #define PROJECT_H_
 
@@ -34,6 +35,7 @@ public:
 
 class Grade
 {
+
 public:
 	Grade(); // Constructor
 
