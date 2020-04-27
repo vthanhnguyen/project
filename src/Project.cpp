@@ -107,29 +107,37 @@ void Grade::addData()
 	int choice, in;
 	do
 	{
-		//get user inputs
-		cout << "Enter 1 for assignment type homework\n"
-			 << "Enter 2 for assignment type quiz\n"
-			 << "Enter 3 for assignment type exam\n"
-			 << "Enter 4 for assignment type final\n";
-		cin >> in;
-		if(in == 1)
-		{
-			type = "hw";
-		}
-		if(in == 2)
-		{
-			type = "quiz";
-		}
-		if(in == 3)
-		{
-			type = "exam";
-		}
-		if(in == 4)
-		{
-			type = "final";
-		}
 
+		do
+		{
+			//get user inputs
+			cout << "Enter 1 for assignment type homework\n"
+				 << "Enter 2 for assignment type quiz\n"
+				 << "Enter 3 for assignment type exam\n"
+				 << "Enter 4 for assignment type final\n";
+			cin >> in;
+
+			if(in == 1)
+			{
+				type = "hw";
+			}
+			else if(in == 2)
+			{
+				type = "quiz";
+			}
+			else if(in == 3)
+			{
+				type = "exam";
+			}
+			else if(in == 4)
+			{
+				type = "final";
+			}
+			else
+			{
+				cout << "Invalid input..Enter again\n";
+			}
+		}while(in > 4 || in <0);
 
 		cout << "Enter the name of the assignment(quiz #1, etc.): ";
 		cin >> name;
