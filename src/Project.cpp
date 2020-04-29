@@ -100,79 +100,94 @@ void Grade::insert(node *head, node *newp)
 // Adds the data to the correct spot and appends it to the file
 // Function will request what type of assignment, the name you want to give it, and the score.
 // Score format: Either in percentages (Ex: 69%) or Score/Total (Ex: 15/20)
-void Grade::addData()
+void Grade::addData(string fileName)
 {
 	string type,name;
 	double score;
 	int choice, in;
-	do
-	{
+	fstream outFile;
+	outFile.open(fileName);
 
+	if(outFile.fail())
+	{
+		cout << "Could not create file.Exiting\n";
+		exit(1);
+	}
+	else
+	{
 		do
 		{
-			//get user inputs
-			cout << "Enter 1 for assignment type homework\n"
-				 << "Enter 2 for assignment type quiz\n"
-				 << "Enter 3 for assignment type exam\n"
-				 << "Enter 4 for assignment type final\n";
-			cin >> in;
 
-			if(in == 1)
+			do
 			{
-				type = "hw";
-			}
-			else if(in == 2)
+				//get user inputs
+				cout << "Enter 1 for assignment type homework\n"
+					 << "Enter 2 for assignment type quiz\n"
+					 << "Enter 3 for assignment type exam\n"
+					 << "Enter 4 for assignment type final\n";
+				cin >> in;
+
+				if(in == 1)
+				{
+					type = "hw";
+				}
+				else if(in == 2)
+				{
+					type = "quiz";
+				}
+				else if(in == 3)
+				{
+					type = "exam";
+				}
+				else if(in == 4)
+				{
+					type = "final";
+				}
+				else
+				{
+					cout << "Invalid input..Enter again\n";
+				}
+			}while(in > 4 || in <= 0);
+
+			cout << "Enter the name of the assignment(quiz #1, etc.): ";
+			cin >> name;
+
+			cout << "Enter the percent of the assignment(.67=67%, 3/4c): ";
+			cin >> score;
+
+			//create new node and assign data
+			node* n = new node; //create a new node and populate
+			n->next = NULL;
+			n->type = type;
+			n->name = name;
+
+			if(type == "hw")
 			{
-				type = "quiz";
+				insert(HW, n);
 			}
-			else if(in == 3)
+			else if(type == "quiz")
 			{
-				type = "exam";
+				insert(Quizzes, n);
 			}
-			else if(in == 4)
+			else if(type == "exam")
 			{
-				type = "final";
+				insert(Exams, n);
 			}
-			else
+			else//final
 			{
-				cout << "Invalid input..Enter again\n";
+				insert(Final, n);
+
 			}
-		}while(in > 4 || in <0);
 
-		cout << "Enter the name of the assignment(quiz #1, etc.): ";
-		cin >> name;
+			// Write to file
+			outFile << "Assignment type: " << type << "\t" << "Assignment name: " << name <<"\t" << "Score: " << score << endl;
 
-		cout << "Enter the percent of the assignment(.67=67%, 3/4c): ";
-		cin >> score;
-
-		//create new node and assign data
-		node* n = new node; //create a new node and populate
-		n->next = NULL;
-		n->type = type;
-		n->name = name;
-
-		if(type == "hw")
-		{
-			insert(HW, n);
-		}
-		if(type == "quiz")
-		{
-			insert(Quizzes, n);
-		}
-		if(type == "exam")
-		{
-			insert(Exams, n);
-		}
-		if(type == "final")
-		{
-			insert(Final, n);
-		}
-
-		cout << "Enter a positive number to add another assignment\nEnter a negitive number to stop.\n";
-		cin >> choice;
+			//Ask user if theres more entries
+			cout << "Enter a positive number to add another assignment\nEnter a negitive number to stop.\n";
+			cin >> choice;
 	}while(choice >= 0);
-
-
+	outFile.close();
+}
 }
 
 //void Grade::loadInfo();
