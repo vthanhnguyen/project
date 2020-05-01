@@ -53,6 +53,7 @@ double Grade::calcHWPerc() {
 	}
 	return (scoresum / count);
 }
+
 double Grade::calcQuizzesPerc() {
 	node *temp = Quizzes;
 	double scoresum = 0; // Sum of all percentage of HW
@@ -97,6 +98,7 @@ void Grade::insert(node *head, node *newp)
 	}
 
 }
+
 // Adds the data to the correct spot and appends it to the file
 // Function will request what type of assignment, the name you want to give it, and the score.
 // Score format: Either in percentages (Ex: 69%) or Score/Total (Ex: 15/20)
@@ -190,10 +192,96 @@ void Grade::addData(string fileName)
 }
 }
 
-//void Grade::loadInfo();
+// Importing Info
+// Function: Importing Student Info w/ Text File of the Student's ID
+void Grade::loadInfo()
+{
+	ifstream input;
+	string inputName;
 
-//void Grade::exportInfo();
+	// Used to Input Data
+	string temp;
+	string tempName;
+	
+	// Requesting User Input for Input File
+	cout << "Please Enter Your Student ID: ";
+	cin >> inputName;
 
-//void Grade::deleteAssignment();
+	input.open(inputName.c_str());
+
+	while (!input.eof())
+	{
+		node* newNode; // Node that will be inserted within the respected linkedlist
+		getline(input, temp);
+
+		stringstream ss(temp);
+		
+		ss >> newNode->type;
+		ss >> newNode->name;
+		ss >> newNode->score;
+
+		switch (newNode->type[0])
+		{
+			case 'H': insert(HW, newNode); break;
+			case 'Q': insert(Quizzes, newNode); break;
+			case 'E': insert(Exams, newNode); break;
+			case 'F': insert(Final, newNode); break;
+		}
+	}
+	
+	input.close();
+
+}
+
+// Exporting Info
+// Function: Exporting Student Info w/ Text File of Their ID
+void Grade::exportInfo()
+{
+	ofstream outFile;
+	string name;
+	node* temp = HW; // To Allow the program to automatically start exporting all the HW data
+
+	cout << "Please Enter Your Student: ";
+	cin >> name;
+
+	outFile.open(name.c_str()); 
+
+	// Format: Homework --> Quiz --> Exams --> Final
+	while (temp != NULL)
+	{
+		outFile << temp << endl;
+		temp = temp->next;
+	}
+
+	temp = Quizzes;
+
+	while (temp != NULL)
+	{
+		outFile << temp << endl;
+		temp = temp->next;
+	}
+
+	temp = Exams;
+
+	while (temp != NULL)
+	{
+		outFile << temp << endl;
+		temp = temp->next;
+	}
+	
+	temp = Final;
+
+	outFile << Final;
+
+	outFile.close();
+
+}
 
 
+// Overloading << to display Assignment Type + Name + Score
+ostream& operator<<(ostream& os, const Assignment& obj)
+{
+	os << obj.type << " " << obj.name << " " << obj.score;
+
+	return os;
+}

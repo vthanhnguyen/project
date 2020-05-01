@@ -4,13 +4,12 @@
  *      Author: Anh Huynh | Kevin La | Thanh Nguyen
  *
  */
-
-
 #ifndef PROJECT_H_
 #define PROJECT_H_
 #include <fstream>
 #include <iostream>
 #include <string>
+#include <sstream>
 
 using namespace std;
 
@@ -25,6 +24,7 @@ public:
 	string name; // Name of assignment
 	double score; // Percent of the assignment
 
+	friend ostream& operator<<(ostream& os, const Assignment& obj);
 };
 
 class node : public Assignment
@@ -36,6 +36,12 @@ public:
 
 class Grade
 {
+private: // Each of these nodes are the head pointer of their respective assignment types
+	node* HW;
+	node* Exams;
+	node* Quizzes;
+	node* Final; // There should only be 1 score in here
+	double GradePercent;
 
 public:
 	Grade(); // Constructor
@@ -66,13 +72,6 @@ public:
 	// Enter the name of the assignment to delete it from the list
 
 	void insert(node *head, node *newp); // Used for inserting nodes into the linked list
-
-private: // Each of these nodes are the head pointer of their respective assignment types
-	node *HW;
-	node *Exams;
-	node *Quizzes;
-	node *Final; // There should only be 1 score in here
-	double GradePercent;
 
 };
 
