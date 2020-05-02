@@ -83,7 +83,10 @@ public:
 	void insertQ(node* newp); // Used for inserting nodes into the linked list
 	void insertE(node* newp); // Used for inserting nodes into the linked list
 	void insertF(node* newp); // Used for inserting nodes into the linked list
-
+	
+	// Inserting "-" for the spaces within the Assignment's name for stringstream
+	string insertDashes(string name);
+	string removeDashes(string name);
 };
 
 

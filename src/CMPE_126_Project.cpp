@@ -16,7 +16,7 @@ int main() {
 	int userInput;
 	Grade user;
 
-	// User Input for Importing Data
+	// Menus 1 --> Ask user if they want to import their existing data. If not, go to menu 2 directly
 	do {
 		cout << "Phase 1" << endl
 			<< "-------------" << endl
@@ -47,13 +47,18 @@ int main() {
 		}
 	} while (validInput == false);
 
+	// Menu 2 --> User can add, delete, or display all the currnet assignments they have on file.
+	// They can Export the info and calculate their weighted grades
+	// Program will end if they select 
 	do {
 		cout << "Phase 2" << endl
-			<< "-------------" << endl
+			<< "-------------------" << endl
 			<< "1. Add Assignments" << endl
-			<< "2. Display All Assignments" << endl
-			<< "3. Export Info" << endl
-			<< "4. Exit" << endl
+			<< "2. Delete Assignments" << endl
+			<< "3. Display All Assignments" << endl
+			<< "4. Calculate Grades" << endl
+			<< "5. Export Info" << endl
+			<< "6. Exit" << endl
 			<< "\nUser Input: ";
 
 		cin >> userInput;
@@ -66,13 +71,22 @@ int main() {
 			break;
 		case 2:
 			system("cls");
-			user.output();
+			user.deleteAssignment();
 			break;
 		case 3:
 			system("cls");
+			user.output();
+			break;
+		case 4:
+			system("cls");
+			user.calcGrade();
+			break;
+		case 5:
+			system("cls");
 			user.exportInfo();
 			break;
-		case 4: exit(1); break;
+		case 6: exit(1); break;
+	
 
 		default:
 			system("cls");
