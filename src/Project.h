@@ -30,6 +30,7 @@ public:
 class node : public Assignment
 {
 public:
+	node();
 	node* next;
 
 };
@@ -55,7 +56,7 @@ public:
 	// Calculates the percentage grade and puts it in GradePercent
 	// Calculated by multiplying the average percentage of the assignment type by it's weight, and summed by all assignment types.
 
-	void addData(string);
+	void addData();
 	// Adds the data to the correct spot and appends it to the file
 	// Function will request what type of assignment, the name you want to give it, and the score.
 	// Score format: Either in percentages (Ex: 69%) or Score/Total (Ex: 15/20)

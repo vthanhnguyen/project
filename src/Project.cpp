@@ -22,6 +22,11 @@ Assignment::Assignment(string s1, string s2, double n)
 	score = n;
 }
 
+node::node():Assignment("", "", 0)
+{
+	next = NULL;
+}
+
 Grade::Grade()
 {
 	HW = nullptr;
@@ -102,94 +107,89 @@ void Grade::insert(node *head, node *newp)
 // Adds the data to the correct spot and appends it to the file
 // Function will request what type of assignment, the name you want to give it, and the score.
 // Score format: Either in percentages (Ex: 69%) or Score/Total (Ex: 15/20)
-void Grade::addData(string fileName)
+void Grade::addData()
 {
-	string type,name;
+	string type, temp;
+	string name = "";
 	double score;
 	int choice, in;
-	fstream outFile;
-	outFile.open(fileName);
 
-	if(outFile.fail())
-	{
-		cout << "Could not create file.Exiting\n";
-		exit(1);
-	}
-	else
-	{
-		do
+		do 
 		{
-
-			do
-			{
 				//get user inputs
-				cout << "Enter 1 for assignment type homework\n"
-					 << "Enter 2 for assignment type quiz\n"
-					 << "Enter 3 for assignment type exam\n"
-					 << "Enter 4 for assignment type final\n";
+			cout << "Which Type of Assignment Are Inputting?" << endl
+				<< "---------------------------------------" << endl
+				<< "1. Homework\n"
+				<< "2. Quiz\n"
+				<< "3. Exam\n"
+				<< "4. Final\n"
+				<< "\nUser Input: ";
+
 				cin >> in;
 
 				if(in == 1)
 				{
-					type = "hw";
+					type = "HW";
 				}
 				else if(in == 2)
 				{
-					type = "quiz";
+					type = "QUIZ";
 				}
 				else if(in == 3)
 				{
-					type = "exam";
+					type = "EXAM";
 				}
 				else if(in == 4)
 				{
-					type = "final";
+					type = "FINAL";
 				}
 				else
 				{
 					cout << "Invalid input..Enter again\n";
 				}
-			}while(in > 4 || in <= 0);
 
-			cout << "Enter the name of the assignment(quiz #1, etc.): ";
-			cin >> name;
+		}while(in > 4 || in <= 0);
 
-			cout << "Enter the percent of the assignment(.67=67%, 3/4c): ";
-			cin >> score;
+		
+		cout << "\n\n\nEnter the name of the assignment(quiz #1, etc.): ";
+		cin >> temp;
 
-			//create new node and assign data
-			node* n = new node; //create a new node and populate
-			n->next = NULL;
-			n->type = type;
-			n->name = name;
+		// Upper case all letters
+		for (unsigned int i = 0; i < temp.length(); i++)
+		{
+			name += toupper(temp[i]);
+		}
 
-			if(type == "hw")
-			{
-				insert(HW, n);
-			}
-			else if(type == "quiz")
-			{
-				insert(Quizzes, n);
-			}
-			else if(type == "exam")
-			{
-				insert(Exams, n);
-			}
-			else//final
-			{
-				insert(Final, n);
+		cout << "Enter the percent of the assignment(.67=67%, 3/4c): ";
+		cin >> score;
 
-			}
+		//create new node and assign data
+		node* n = new node; //create a new node and populate
+		n->next = NULL;
+		n->type = type;
+		n->name = name;
 
-			// Write to file
-			outFile << "Assignment type: " << type << "\t" << "Assignment name: " << name <<"\t" << "Score: " << score << endl;
 
-			//Ask user if theres more entries
-			cout << "Enter a positive number to add another assignment\nEnter a negitive number to stop.\n";
-			cin >> choice;
-	}while(choice >= 0);
-	outFile.close();
-}
+		if(type == "HW")
+		{
+			insert(HW, n);
+		}
+		else if(type == "QUIZ")
+		{
+			insert(Quizzes, n);
+		}
+		else if(type == "EXAM")
+		{
+			insert(Exams, n);
+		}
+		else//final
+		{
+			insert(Final, n);
+		}
+		//Ask user if theres more entries
+		cout << "Enter a positive number to add another assignment\nEnter a negitive number to stop.\n";
+		cin >> choice;
+		
 }
 
 // Importing Info
@@ -211,7 +211,7 @@ void Grade::loadInfo()
 
 	while (!input.eof())
 	{
-		node* newNode; // Node that will be inserted within the respected linkedlist
+		node* newNode = new node; // Node that will be inserted within the respected linkedlist
 		getline(input, temp);
 
 		stringstream ss(temp);
@@ -241,7 +241,7 @@ void Grade::exportInfo()
 	string name;
 	node* temp = HW; // To Allow the program to automatically start exporting all the HW data
 
-	cout << "Please Enter Your Student: ";
+	cout << "Please Enter Your Student ID: ";
 	cin >> name;
 
 	outFile.open(name.c_str()); 
@@ -281,7 +281,22 @@ void Grade::exportInfo()
 // Overloading << to display Assignment Type + Name + Score
 ostream& operator<<(ostream& os, const Assignment& obj)
 {
-	os << obj.type << " " << obj.name << " " << obj.score;
+	string temp1 = "";
+	string temp2 = "";
+
+	for (unsigned int i = 0; i < obj.type.length(); i++)
+	{
+		temp1 += toupper(obj.type[i]);
+	}
+
+	for (unsigned int i = 0; i < obj.name.length(); i++)
+	{
+		temp2 += toupper(obj.name[i]);
+	}
+
+	Assignment temp3(temp1, temp2, obj.score);
+
+	os << temp3.type << " " << temp3.name << " " << temp3.score;
 
 	return os;
 }
