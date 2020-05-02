@@ -33,37 +33,152 @@ Grade::Grade()
 
 double Grade::calcExamPerc() {
 	node *temp = Exams;
-	double scoresum = 0; // Sum of all percentage of exams
-	double count = 0; // How many exams there are
-	while (temp != nullptr) {
-		scoresum += temp->data.score;
-		temp = temp->next;
-		count++;
+	if (temp == nullptr)
+		return 0;
+	else {
+		double scoresum = 0; // Sum of all percentage of exams
+		double count = 0; // How many exams there are
+		bool dropLowest = false;
+		double lowest = temp->data.score;
+		int lowestIndex;
+		char choice = 'Z';
+		cout << "Drop lowest Exam? (Y/N): " << endl;
+		cin >> choice;
+		while (choice != 'Y' || choice != 'N') {
+			cout << "Invalid Choice, please enter Y or N: ";
+			cin >> choice;
+		}
+
+		if (choice == 'Y')
+			dropLowest = true;
+
+		while (temp != nullptr) { // Gets the index for the lowest grade
+			if (lowest > temp->data.score) {
+				lowest = temp->data.score;
+				lowestIndex = count;
+			}
+			count++;
+		}
+
+		count = 0;
+		if (dropLowest) {
+			while (temp != nullptr) {
+				if (count != lowestIndex) {
+					scoresum += temp->data.score;
+					temp = temp->next;
+					count++;
+				}
+			}
+
+		} else {
+			while (temp != nullptr) {
+				scoresum += temp->data.score;
+				temp = temp->next;
+				count++;
+			}
+		}
+		return (scoresum / count);
 	}
-	return (scoresum / count);
 }
+
 double Grade::calcHWPerc() {
 	node *temp = HW;
-	double scoresum = 0; // Sum of all percentage of HW
-	double count = 0; // How many HWs there are
-	while (temp != nullptr) {
-		scoresum += temp->data.score;
-		temp = temp->next;
-		count++;
+	if (temp == nullptr)
+		return 0;
+	else {
+		double scoresum = 0; // Sum of all percentage of exams
+		double count = 0; // How many exams there are
+		bool dropLowest = false;
+		double lowest = temp->data.score;
+		int lowestIndex;
+		char choice = 'Z';
+		cout << "Drop lowest HW? (Y/N): " << endl;
+		cin >> choice;
+		while (choice != 'Y' || choice != 'N') {
+			cout << "Invalid Choice, please enter Y or N: ";
+			cin >> choice;
+		}
+
+		if (choice == 'Y')
+			dropLowest = true;
+
+		while (temp != nullptr) { // Gets the index for the lowest grade
+			if (lowest > temp->data.score) {
+				lowest = temp->data.score;
+				lowestIndex = count;
+			}
+			count++;
+		}
+
+		count = 0;
+		if (dropLowest) {
+			while (temp != nullptr) {
+				if (count != lowestIndex) {
+					scoresum += temp->data.score;
+					temp = temp->next;
+					count++;
+				}
+			}
+
+		} else {
+			while (temp != nullptr) {
+				scoresum += temp->data.score;
+				temp = temp->next;
+				count++;
+			}
+		}
+		return (scoresum / count);
 	}
-	return (scoresum / count);
 }
 
 double Grade::calcQuizzesPerc() {
 	node *temp = Quizzes;
-	double scoresum = 0; // Sum of all percentage of HW
-	double count = 0; // How many HWs there are
-	while (temp != nullptr) {
-		scoresum += temp->data.score;
-		temp = temp->next;
-		count++;
+	if (temp == nullptr)
+		return 0;
+	else {
+		double scoresum = 0; // Sum of all percentage of exams
+		double count = 0; // How many exams there are
+		bool dropLowest = false;
+		double lowest = temp->data.score;
+		int lowestIndex;
+		char choice = 'Z';
+		cout << "Drop lowest Quiz? (Y/N): " << endl;
+		cin >> choice;
+		while (choice != 'Y' || choice != 'N') {
+			cout << "Invalid Choice, please enter Y or N: ";
+			cin >> choice;
+		}
+
+		if (choice == 'Y')
+			dropLowest = true;
+
+		while (temp != nullptr) { // Gets the index for the lowest grade
+			if (lowest > temp->data.score) {
+				lowest = temp->data.score;
+				lowestIndex = count;
+			}
+			count++;
+		}
+
+		count = 0;
+		if (dropLowest) {
+			while (temp != nullptr) {
+				if (count != lowestIndex) {
+					scoresum += temp->data.score;
+					temp = temp->next;
+					count++;
+				}
+			}
+
+		} else {
+			while (temp != nullptr) {
+				scoresum += temp->data.score;
+				temp = temp->next;
+				count++;
+			}
+		}
+		return (scoresum / count);
 	}
-	return (scoresum / count);
 }
 
 void Grade::calcGrade(){
@@ -144,7 +259,7 @@ void Grade::addData()
 	string type, temp;
 	string name = "";
 	double score;
-	int choice, in;
+	int in;
 
 		do 
 		{
