@@ -87,14 +87,51 @@ void Grade::calcGrade(){
 	cout << "Your current grade percentage is: " << GradePercent;
 }
 
-void Grade::insert(node* head, node* newp)
+// Inserting Functions for Each List
+void Grade::insertHW(node* newp)
 {
-	if (head == NULL) {
-		head = newp;
+	if (HW == NULL) {
+		HW = newp;
 		newp->next = NULL;
 	} else {
-		newp->next = head;
-		head = newp;
+		newp->next = HW;
+		HW = newp;
+	}
+}
+
+void Grade::insertQ(node* newp)
+{
+	if (Quizzes == NULL) {
+		Quizzes = newp;
+		newp->next = NULL;
+	}
+	else {
+		newp->next = Quizzes;
+		Quizzes = newp;
+	}
+}
+
+void Grade::insertE(node* newp)
+{
+	if (Exams == NULL) {
+		Exams = newp;
+		newp->next = NULL;
+	}
+	else {
+		newp->next = Exams;
+		Exams = newp;
+	}
+}
+
+void Grade::insertF(node* newp)
+{
+	if (Final == NULL) {
+		Final = newp;
+		newp->next = NULL;
+	}
+	else {
+		newp->next = Final;
+		Final = newp;
 	}
 }
 
@@ -177,19 +214,19 @@ void Grade::addData()
 
 		if(type == "HW")
 		{
-			insert(HW, n);
+			insertHW(n);
 		}
 		else if(type == "QUIZ")
 		{
-			insert(Quizzes, n);
+			insertQ(n);
 		}
 		else if(type == "EXAM")
 		{
-			insert(Exams, n);
+			insertE(n);
 		}
 		else//final
 		{
-			insert(Final, n);
+			insertF(n);
 		}
 
 }
@@ -211,6 +248,12 @@ void Grade::loadInfo()
 
 	input.open(inputName.c_str());
 
+	if (input.fail())
+	{
+		system("cls");
+		cout << "Could not locate file.";
+		system("pause");
+	}
 	while (!input.eof())
 	{
 		node* newNode = new node; // Node that will be inserted within the respected linkedlist
@@ -224,10 +267,10 @@ void Grade::loadInfo()
 
 		switch (newNode->data.type[0])
 		{
-			case 'H': insert(HW, newNode); break;
-			case 'Q': insert(Quizzes, newNode); break;
-			case 'E': insert(Exams, newNode); break;
-			case 'F': insert(Final, newNode); break;
+			case 'H': insertHW(newNode); break;
+			case 'Q': insertQ(newNode); break;
+			case 'E': insertE(newNode); break;
+			case 'F': insertF(newNode); break;
 		}
 	}
 	
@@ -335,6 +378,8 @@ bool Grade::isAlpha(char c)
 // Overloading << to display Assignment Type + Name + Score
 ostream& operator<<(ostream& os, const Assignment& obj)
 { 
-	cout << obj.type << " " << obj.name << " " << obj.score <<"%";
+	cout << setw(5) << left << obj.type <<
+		setw(15) << left << obj.name << 
+		setw(5) << left << setprecision(2) << fixed << obj.score <<"%";
 	return os;
 }

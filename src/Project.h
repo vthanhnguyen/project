@@ -8,6 +8,7 @@
 #define PROJECT_H_
 #include <fstream>
 #include <iostream>
+#include <iomanip>
 #include <string>
 #include <sstream>
 
@@ -78,7 +79,10 @@ public:
 	// Functionality: Select assignment type, which will display all assignment in that type
 	// Enter the name of the assignment to delete it from the list
 
-	void insert(node* head, node* newp); // Used for inserting nodes into the linked list
+	void insertHW(node* newp); // Used for inserting nodes into the linked list
+	void insertQ(node* newp); // Used for inserting nodes into the linked list
+	void insertE(node* newp); // Used for inserting nodes into the linked list
+	void insertF(node* newp); // Used for inserting nodes into the linked list
 
 };
 
