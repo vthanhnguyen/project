@@ -189,7 +189,7 @@ void Grade::addData()
 		}while(validInput == false);
 
 		
-		cout << "\n\nEnter the name of the assignment(quiz #1, etc.): ";
+		cout << "\n\nEnter the name of the assignment: ";
 		cin.ignore();
 		getline(cin, temp);
 		
@@ -256,7 +256,7 @@ void Grade::loadInfo()
 	}
 	while (!input.eof())
 	{
-		node* newNode = new node; // Node that will be inserted within the respected linkedlist
+		node* newNode = new node; // Node that will be inserted within the respective linkedlist
 		getline(input, temp);
 
 		stringstream ss(temp);
@@ -264,6 +264,8 @@ void Grade::loadInfo()
 		ss >> newNode->data.type;
 		ss >> newNode->data.name;
 		ss >> newNode->data.score;
+
+		newNode->data.name = removeDashes(newNode->data.name);
 
 		switch (newNode->data.type[0])
 		{
@@ -294,14 +296,21 @@ void Grade::exportInfo()
 	// Format: Homework --> Quiz --> Exams --> Final
 	while (temp != NULL)
 	{
+		
+		temp->data.name = insertDashes(temp->data.name);
+
 		outFile << temp->data << endl;
 		temp = temp->next;
+
+
 	}
 
 	temp = Quizzes;
 
 	while (temp != NULL)
 	{
+		temp->data.name = insertDashes(temp->data.name);
+
 		outFile << temp->data << endl;
 		temp = temp->next;
 	}
@@ -310,6 +319,8 @@ void Grade::exportInfo()
 
 	while (temp != NULL)
 	{
+		temp->data.name = insertDashes(temp->data.name);
+
 		outFile << temp->data << endl;
 		temp = temp->next;
 	}
@@ -318,6 +329,8 @@ void Grade::exportInfo()
 
 	while (temp != NULL)
 	{
+		temp->data.name = insertDashes(temp->data.name);
+
 		outFile << temp->data << endl;
 	}
 
@@ -325,14 +338,15 @@ void Grade::exportInfo()
 
 }
 
-
+// Displays the user's current data via the command prompt
 void Grade::output()
 {
 	node* temp = HW; // To Allow the program to automatically start exporting all the HW data
 
-	cout << "Your Report: " << endl;
+	cout << "Your Report: " << endl
+		<< "-------------------" << endl;
 
-	// Format: Homework --> Quiz --> Exams --> Final
+	// Format Order: Homework --> Quiz --> Exams --> Final
 	while (temp != NULL)
 	{
 		cout << temp->data << endl;
@@ -366,6 +380,8 @@ void Grade::output()
 
 }
 
+// isAlpha is to make all the letters of the assignment name to make importing and exporting files easier
+
 bool Grade::isAlpha(char c)
 {
 	if ((c >= 'A' && c <= 'Z') || ((c >= 'a' && c <= 'z')))
@@ -375,11 +391,51 @@ bool Grade::isAlpha(char c)
 	else
 		return false;
 }
+
+// Using stringstream for importing will store each word into a different variable after each space
+// Not wanted for Assignment Name if a space is present 
+// Changes spaces to dashes to keep the integrity of the assignment name
+string Grade::insertDashes(string name)
+{
+	string temp = "";
+
+	for (int i = 0; i < name.length(); i++)
+	{
+		if (name[i] == ' ')
+		{
+			temp += "-";
+		}
+		else
+			temp += name[i];
+	}
+
+	return temp;
+}
+
+// Removes the dashes upon import to keep the integrity of the assignment name
+// Example: chapter-#1-HW --> chapter #1 HW
+string Grade::removeDashes(string name)
+{
+	string temp = "";
+
+	for (int i = 0; i < name.length(); i++)
+	{
+		if (name[i] == '-')
+		{
+			temp += " ";
+		}
+		else
+			temp += name[i];
+	}
+
+	return temp;
+}
+
 // Overloading << to display Assignment Type + Name + Score
 ostream& operator<<(ostream& os, const Assignment& obj)
 { 
-	cout << setw(5) << left << obj.type <<
-		setw(15) << left << obj.name << 
+	os << setw(5) << left << obj.type <<
+		setw(20) << left << obj.name << 
 		setw(5) << left << setprecision(2) << fixed << obj.score <<"%";
 	return os;
 }
