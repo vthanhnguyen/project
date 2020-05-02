@@ -25,12 +25,13 @@ public:
 	double score; // Percent of the assignment
 
 	friend ostream& operator<<(ostream& os, const Assignment& obj);
+
 };
 
-class node : public Assignment
+class node
 {
 public:
-	node();
+	Assignment data;
 	node* next;
 
 };
@@ -46,6 +47,8 @@ private: // Each of these nodes are the head pointer of their respective assignm
 
 public:
 	Grade(); // Constructor
+
+	bool isAlpha(char); // Upper case all the letters for Assignment Type/Name 
 
 	double calcExamPerc(); // Calculates the total percentage of exams | There will be an option to set a flag for dropping the lowest score
 	double calcHWPerc(); // Calculates the total percentage of Homework
@@ -68,11 +71,14 @@ public:
 	// Exports all assignments of all types into a nice format so the program can load the file on run time.
 	// Info will be exported in this format: <Assignment Type> <Assignment Name> <Score>
 
+	void output();
+	// Displays User report
+
 	void deleteAssignment();
 	// Functionality: Select assignment type, which will display all assignment in that type
 	// Enter the name of the assignment to delete it from the list
 
-	void insert(node *head, node *newp); // Used for inserting nodes into the linked list
+	void insert(node* head, node* newp); // Used for inserting nodes into the linked list
 
 };
 

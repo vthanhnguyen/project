@@ -1,4 +1,3 @@
-
 // Name        : CMPE.cpp
 // Author      : 
 // Version     :
@@ -10,10 +9,6 @@
 #include "Project.h"
 
 using namespace std;
-
-void menu1();
-
-void newUser(Grade& obj);
 
 int main() {
 	
@@ -36,7 +31,6 @@ int main() {
 		{
 		case 1:
 			system("cls");
-			user.addData();
 			validInput = true;
 			break;
 		case 2: 
@@ -53,18 +47,15 @@ int main() {
 		}
 	} while (validInput == false);
 
-	validInput = false;
-
 	do {
 		cout << "Phase 2" << endl
-			<< "-------------" <<" << endl
-			<< "2. Export Info" << endl
-			<< "3. Exit" << endl
+			<< "-------------" << endl
+			<< "1. Add Assignments" << endl
+			<< "2. Display All Assignments" << endl
+			<< "3. Export Info" << endl
+			<< "4. Exit" << endl
 			<< "\nUser Input: ";
-][
-	'5/_|}{
-		"?"'
-]
+
 		cin >> userInput;
 
 		switch (userInput)
@@ -72,21 +63,25 @@ int main() {
 		case 1:
 			system("cls");
 			user.addData();
-			validInput = true;
 			break;
 		case 2:
 			system("cls");
-			user.exportInfo();
-			validInput = true;
+			user.output();
 			break;
-		case 3: exit(1); break;
+		case 3:
+			system("cls");
+			user.exportInfo();
+			break;
+		case 4: exit(1); break;
 
 		default:
 			system("cls");
 			cout << "Invalid Input. Please Try Again." << endl;
 			system("pause");
 		}
-	} while (validInput == false);
+
+		system("cls");
+	} while (true);
 
 	
 }

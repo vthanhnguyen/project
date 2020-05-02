@@ -22,17 +22,12 @@ Assignment::Assignment(string s1, string s2, double n)
 	score = n;
 }
 
-node::node():Assignment("", "", 0)
-{
-	next = NULL;
-}
-
 Grade::Grade()
 {
-	HW = nullptr;
-	Exams = nullptr;
-	Quizzes = nullptr;
-	Final = nullptr;
+	HW = NULL;
+	Exams = NULL;
+	Quizzes = NULL;
+	Final = NULL;
 	GradePercent = 0;
 }
 
@@ -41,7 +36,7 @@ double Grade::calcExamPerc() {
 	double scoresum = 0; // Sum of all percentage of exams
 	double count = 0; // How many exams there are
 	while (temp != nullptr) {
-		scoresum += temp->score;
+		scoresum += temp->data.score;
 		temp = temp->next;
 		count++;
 	}
@@ -52,7 +47,7 @@ double Grade::calcHWPerc() {
 	double scoresum = 0; // Sum of all percentage of HW
 	double count = 0; // How many HWs there are
 	while (temp != nullptr) {
-		scoresum += temp->score;
+		scoresum += temp->data.score;
 		temp = temp->next;
 		count++;
 	}
@@ -64,7 +59,7 @@ double Grade::calcQuizzesPerc() {
 	double scoresum = 0; // Sum of all percentage of HW
 	double count = 0; // How many HWs there are
 	while (temp != nullptr) {
-		scoresum += temp->score;
+		scoresum += temp->data.score;
 		temp = temp->next;
 		count++;
 	}
@@ -88,11 +83,11 @@ void Grade::calcGrade(){
 		else
 			choice = 0;
 	}
-	GradePercent = (calcExamPerc() * (Exam_Weight * 0.01)) + (calcHWPerc() * (HW_Weight * 0.01)) + (calcQuizzesPerc() * (Quiz_Weight * 0.01)) + (Final->score * (Final_Weight * 0.01));
+	GradePercent = (calcExamPerc() * (Exam_Weight * 0.01)) + (calcHWPerc() * (HW_Weight * 0.01)) + (calcQuizzesPerc() * (Quiz_Weight * 0.01)) + (Final->data.score * (Final_Weight * 0.01));
 	cout << "Your current grade percentage is: " << GradePercent;
 }
 
-void Grade::insert(node *head, node *newp)
+void Grade::insert(node* head, node* newp)
 {
 	if (head == NULL) {
 		head = newp;
@@ -101,14 +96,14 @@ void Grade::insert(node *head, node *newp)
 		newp->next = head;
 		head = newp;
 	}
-
 }
 
 // Adds the data to the correct spot and appends it to the file
 // Function will request what type of assignment, the name you want to give it, and the score.
 // Score format: Either in percentages (Ex: 69%) or Score/Total (Ex: 15/20)
 void Grade::addData()
-{
+{	
+	bool validInput = false;
 	string type, temp;
 	string name = "";
 	double score;
@@ -130,44 +125,54 @@ void Grade::addData()
 				if(in == 1)
 				{
 					type = "HW";
+					validInput = true;
 				}
 				else if(in == 2)
 				{
 					type = "QUIZ";
+					validInput = true;
 				}
 				else if(in == 3)
 				{
 					type = "EXAM";
+					validInput = true;
 				}
 				else if(in == 4)
 				{
 					type = "FINAL";
+					validInput = true;
 				}
 				else
 				{
 					cout << "Invalid input..Enter again\n";
+					system("pause");
+					system("cls");
 				}
 
-		}while(in > 4 || in <= 0);
+		}while(validInput == false);
 
 		
-		cout << "\n\n\nEnter the name of the assignment(quiz #1, etc.): ";
-		cin >> temp;
-
+		cout << "\n\nEnter the name of the assignment(quiz #1, etc.): ";
+		cin.ignore();
+		getline(cin, temp);
+		
 		// Upper case all letters
 		for (unsigned int i = 0; i < temp.length(); i++)
 		{
-			name += toupper(temp[i]);
+			if (isAlpha(temp[i]))
+				name += toupper(temp[i]);
+			else
+				name += temp[i];
 		}
 
-		cout << "Enter the percent of the assignment(.67=67%, 3/4c): ";
+		cout << "Enter the percent of the assignment: ";
 		cin >> score;
 
 		//create new node and assign data
 		node* n = new node; //create a new node and populate
-		n->next = NULL;
-		n->type = type;
-		n->name = name;
+		n->data.type = type;
+		n->data.name = name;
+		n->data.score = score;
 
 
 		if(type == "HW")
@@ -186,10 +191,7 @@ void Grade::addData()
 		{
 			insert(Final, n);
 		}
-		//Ask user if theres more entries
-		cout << "Enter a positive number to add another assignment\nEnter a negitive number to stop.\n";
-		cin >> choice;
-		
+
 }
 
 // Importing Info
@@ -216,11 +218,11 @@ void Grade::loadInfo()
 
 		stringstream ss(temp);
 		
-		ss >> newNode->type;
-		ss >> newNode->name;
-		ss >> newNode->score;
+		ss >> newNode->data.type;
+		ss >> newNode->data.name;
+		ss >> newNode->data.score;
 
-		switch (newNode->type[0])
+		switch (newNode->data.type[0])
 		{
 			case 'H': insert(HW, newNode); break;
 			case 'Q': insert(Quizzes, newNode); break;
@@ -249,7 +251,7 @@ void Grade::exportInfo()
 	// Format: Homework --> Quiz --> Exams --> Final
 	while (temp != NULL)
 	{
-		outFile << temp << endl;
+		outFile << temp->data << endl;
 		temp = temp->next;
 	}
 
@@ -257,7 +259,7 @@ void Grade::exportInfo()
 
 	while (temp != NULL)
 	{
-		outFile << temp << endl;
+		outFile << temp->data << endl;
 		temp = temp->next;
 	}
 
@@ -265,38 +267,74 @@ void Grade::exportInfo()
 
 	while (temp != NULL)
 	{
-		outFile << temp << endl;
+		outFile << temp->data << endl;
 		temp = temp->next;
 	}
 	
 	temp = Final;
 
-	outFile << Final;
+	while (temp != NULL)
+	{
+		outFile << temp->data << endl;
+	}
 
 	outFile.close();
 
 }
 
 
+void Grade::output()
+{
+	node* temp = HW; // To Allow the program to automatically start exporting all the HW data
+
+	cout << "Your Report: " << endl;
+
+	// Format: Homework --> Quiz --> Exams --> Final
+	while (temp != NULL)
+	{
+		cout << temp->data << endl;
+		temp = temp->next;
+	}
+
+	temp = Quizzes;
+
+	while (temp != NULL)
+	{
+		cout << temp->data << endl;
+		temp = temp->next;
+	}
+
+	temp = Exams;
+
+	while (temp != NULL)
+	{
+		cout << temp->data << endl;
+		temp = temp->next;
+	}
+
+	temp = Final;
+
+	if (temp != NULL)
+	{
+		cout << temp->data << endl;
+	}
+
+	system("pause");
+
+}
+
+bool Grade::isAlpha(char c)
+{
+	if ((c >= 'A' && c <= 'Z') || ((c >= 'a' && c <= 'z')))
+	{
+		return true;
+	}
+	else
+		return false;
+}
 // Overloading << to display Assignment Type + Name + Score
 ostream& operator<<(ostream& os, const Assignment& obj)
-{
-	string temp1 = "";
-	string temp2 = "";
-
-	for (unsigned int i = 0; i < obj.type.length(); i++)
-	{
-		temp1 += toupper(obj.type[i]);
-	}
-
-	for (unsigned int i = 0; i < obj.name.length(); i++)
-	{
-		temp2 += toupper(obj.name[i]);
-	}
-
-	Assignment temp3(temp1, temp2, obj.score);
-
-	os << temp3.type << " " << temp3.name << " " << temp3.score;
-
+{ 
+	cout << obj.type << " " << obj.name << " " << obj.score <<"%";
 	return os;
 }
