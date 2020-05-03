@@ -428,22 +428,28 @@ void Grade::deleteNode(node* head, int userInput)
 		cin >> userInput;
 	}
 
-	cout << "I am here" << endl;
-	//since the assignment starts at 1, head == 1
-	if(userInput == 1)//remove the head
+
+	if(userInput == 1)// Case 1: Delete Head
 	{
 		HW = temp->next;//assign the haed to the one after the head
 		delete temp;
-		return;
 	}
+	else if(userInput == count) // Case 2: Delete anywhere in the middle
+	{
+		for(int i = 0; i <userInput-1;i++)//finding the previous node of the node to be deleted
+			temp = temp->next; //this node stores the node before the deleted node
 
-	for(int i = 0; i <userInput-1;i++)//finding the previous node of the node to be deleted
-		temp = temp->next; //this node stores the node before the deleted node
-
-
-	storeNext = temp->next; //this stores the next node afer the targeted deleted now
-	temp->next = storeNext->next;
-	delete storeNext;
+		storeNext = temp->next; //this stores the next node afer the targeted deleted now
+		temp->next = storeNext->next;
+		delete storeNext;
+	}
+	else // Case 3: Delete the tail
+	{
+		while(temp->next->next != NULL)
+			temp = temp->next;
+		temp = temp->next;
+		temp = NULL;
+	}
 
 	cout << "I have succesfully deleted the assignment" << endl;
 }
