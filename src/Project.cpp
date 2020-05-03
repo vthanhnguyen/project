@@ -33,23 +33,25 @@ Grade::Grade()
 
 double Grade::calcExamPerc() {
 	node *temp = Exams;
+
 	if (temp == nullptr)
 		return 0;
 	else {
 		double scoresum = 0; // Sum of all percentage of exams
-		double count = 0; // How many exams there are
+		int count = 0; // How many exams there are
 		bool dropLowest = false;
 		double lowest = temp->data.score;
 		int lowestIndex;
-		char choice = 'Z';
-		cout << "Drop lowest Exam? (Y/N): " << endl;
+		int choice;
+		cout << "Drop lowest Exam? (Enter 1 for Yes/ 0 for No): " << endl;
 		cin >> choice;
-		while (choice != 'Y' || choice != 'N') {
+
+		while (choice > 1 && choice < 0) {
 			cout << "Invalid Choice, please enter Y or N: ";
 			cin >> choice;
 		}
 
-		if (choice == 'Y')
+		if (choice == 1)
 			dropLowest = true;
 
 		while (temp != nullptr) { // Gets the index for the lowest grade
@@ -57,6 +59,8 @@ double Grade::calcExamPerc() {
 				lowest = temp->data.score;
 				lowestIndex = count;
 			}
+
+			temp = temp->next;
 			count++;
 		}
 
@@ -77,7 +81,7 @@ double Grade::calcExamPerc() {
 				count++;
 			}
 		}
-		return (scoresum / count);
+		return (scoresum / static_cast<double>(count));
 	}
 }
 
@@ -87,19 +91,21 @@ double Grade::calcHWPerc() {
 		return 0;
 	else {
 		double scoresum = 0; // Sum of all percentage of exams
-		double count = 0; // How many exams there are
+		int count = 0; // How many exams there are
 		bool dropLowest = false;
 		double lowest = temp->data.score;
 		int lowestIndex;
-		char choice;
-		cout << "Drop lowest HW? (Y/N): " << endl;
+
+
+		int choice;
+		cout << "Drop lowest HW? (Enter 1 for Yes/ 0 for No): " << endl;
 		cin >> choice;
-		while (choice != 'Y' || choice != 'N') {
+		while (choice > 1 && choice < 0) {
 			cout << "Invalid Choice, please enter Y or N: ";
 			cin >> choice;
 		}
 
-		if (choice == 'Y')
+		if (choice == 1)
 			dropLowest = true;
 
 		while (temp != nullptr) { // Gets the index for the lowest grade
@@ -107,6 +113,8 @@ double Grade::calcHWPerc() {
 				lowest = temp->data.score;
 				lowestIndex = count;
 			}
+
+			temp = temp->next;
 			count++;
 		}
 
@@ -127,7 +135,7 @@ double Grade::calcHWPerc() {
 				count++;
 			}
 		}
-		return (scoresum / count);
+		return (scoresum / static_cast<double>(count));
 	}
 }
 
@@ -135,28 +143,33 @@ double Grade::calcQuizzesPerc() {
 	node *temp = Quizzes;
 	if (temp == nullptr)
 		return 0;
+
 	else {
 		double scoresum = 0; // Sum of all percentage of exams
-		double count = 0; // How many exams there are
+		int count = 0; // How many exams there are
 		bool dropLowest = false;
 		double lowest = temp->data.score;
 		int lowestIndex;
-		char choice = 'Z';
-		cout << "Drop lowest Quiz? (Y/N): " << endl;
+		int choice;
+
+		cout << "Drop lowest Quiz? (Enter 1 for Yes/ 0 for No): " << endl;
 		cin >> choice;
-		while (choice != 'Y' || choice != 'N') {
+
+		while (choice > 1 && choice < 0) {
 			cout << "Invalid Choice, please enter Y or N: ";
 			cin >> choice;
 		}
 
-		if (choice == 'Y')
-			dropLowest = true;
+		if (choice == 1)
+					dropLowest = true;
 
 		while (temp != nullptr) { // Gets the index for the lowest grade
 			if (lowest > temp->data.score) {
 				lowest = temp->data.score;
 				lowestIndex = count;
 			}
+
+			temp = temp->next;
 			count++;
 		}
 
@@ -177,7 +190,7 @@ double Grade::calcQuizzesPerc() {
 				count++;
 			}
 		}
-		return (scoresum / count);
+		return (scoresum / static_cast<double>(count));
 	}
 }
 
@@ -198,8 +211,10 @@ void Grade::calcGrade(){
 		else
 			choice = 0;
 	}
+
 	GradePercent = (calcExamPerc() * (Exam_Weight * 0.01)) + (calcHWPerc() * (HW_Weight * 0.01)) + (calcQuizzesPerc() * (Quiz_Weight * 0.01)) + (Final->data.score * (Final_Weight * 0.01));
-	cout << "Your current grade percentage is: " << GradePercent;
+	cout << "Your current grade percentage is: " << GradePercent << endl;
+	system("pause");
 }
 
 // Inserting Functions for Each List
@@ -411,6 +426,15 @@ void Grade::deleteAssignment()
 		cout << "Invalid Input. Please Try Again." << endl;
 	}
 
+	cout << "Enter the number of the assignment you would like to delete: ";
+	cin >> userInput;
+
+	while (userInput > count || userInput < 0)
+	{
+		"Invalid Input. Please Try Again: ";
+		cin >> userInput;
+	}
+
 
 }
 
@@ -433,6 +457,8 @@ void Grade::loadInfo()
 	// Requesting User Input for Input File
 	cout << "Please Enter Your Student ID: ";
 	cin >> inputName;
+
+	inputName += ".txt";
 
 	input.open(inputName.c_str());
 
@@ -466,6 +492,7 @@ void Grade::loadInfo()
 
 	input.close();
 
+	system("cls");
 }
 
 // Exporting Info
@@ -625,10 +652,17 @@ ostream& operator<<(ostream& os, const Assignment& obj)
 	os << setw(5) << left << obj.type <<
 		setw(20) << left << obj.name <<
 		setw(5) << left << setprecision(2) << fixed << obj.score <<"%";
+
+{ 
+	os << setw(10) << left << obj.type <<
+		setw(30) << left << obj.name << 
+		setw(6) << left << setprecision(2) << fixed << obj.score <<"%";
+
 	return os;
 }
 
 // Helpful Functions:
+
 int Grade::printLL(node *head)
 {
 	int count = 1;
