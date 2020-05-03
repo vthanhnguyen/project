@@ -366,8 +366,6 @@ void Grade::addData()
 void Grade::deleteAssignment()
 {
 	int count; // how many in the linked list of the assignment type they chose
-	node *storeNext;
-	node* temp;
 
 	cout << "Which type of assignment do you want to delete? [Enter a number]" << endl
 		 << "1. Homework" << endl
@@ -385,44 +383,17 @@ void Grade::deleteAssignment()
 
 	switch (userInput) {
 	case 1:
-		count = printLL(HW);
-		temp = HW;
-		cout << "Enter the number of the assignment you would like to delete: ";
-		cin >> userInput;
-		while (userInput > count || userInput <= 0)
-		{
-			cout << "Invalid Input. Please Try Again: ";
-			cin >> userInput;
-		}
-
-		cout << "I am here" << endl;
-		//since the assignment starts at 1, head == 1
-		if(userInput == 1)//remove the head
-		{
-			HW = temp->next;//assign the haed to the one after the head
-			delete temp;
-			break;
-		}
-
-		for(int i = 0; i <userInput-1;i++)//finding the previous node of the node to be deleted
-			temp = temp->next; //this node stores the node before the deleted node
-
-
-		storeNext = temp->next; //this stores the next node afer the targeted deleted now
-		temp->next = storeNext->next;
-		delete storeNext;
-
-		cout << "I have succesfully deleted the assignment" << endl;
+		deleteNode(HW,userInput);
 		break;
 
 	case 2:
-		count = printLL(Quizzes);
+		deleteNode(Exams,userInput);
 		break;
 	case 3:
-		count = printLL(Exams);
+		deleteNode(Quizzes,userInput);
 		break;
 	case 4:
-		count = printLL(Final);
+		deleteNode(Final,userInput);
 		break;
 	case 5:
 		return;
@@ -443,9 +414,38 @@ void Grade::deleteAssignment()
 
 }
 
-void Grade::deleteNode(node* head)
+void Grade::deleteNode(node* head, int userInput)
 {
+	int count = printLL(head);
+	node *storeNext;
+	node* temp;
+	temp = HW;
+	cout << "Enter the number of the assignment you would like to delete: ";
+	cin >> userInput;
+	while (userInput > count || userInput <= 0)
+	{
+		cout << "Invalid Input. Please Try Again: ";
+		cin >> userInput;
+	}
 
+	cout << "I am here" << endl;
+	//since the assignment starts at 1, head == 1
+	if(userInput == 1)//remove the head
+	{
+		HW = temp->next;//assign the haed to the one after the head
+		delete temp;
+		return;
+	}
+
+	for(int i = 0; i <userInput-1;i++)//finding the previous node of the node to be deleted
+		temp = temp->next; //this node stores the node before the deleted node
+
+
+	storeNext = temp->next; //this stores the next node afer the targeted deleted now
+	temp->next = storeNext->next;
+	delete storeNext;
+
+	cout << "I have succesfully deleted the assignment" << endl;
 }
 
 // Importing Info
