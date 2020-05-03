@@ -91,7 +91,7 @@ double Grade::calcHWPerc() {
 		bool dropLowest = false;
 		double lowest = temp->data.score;
 		int lowestIndex;
-		char choice = 'Z';
+		char choice;
 		cout << "Drop lowest HW? (Y/N): " << endl;
 		cin >> choice;
 		while (choice != 'Y' || choice != 'N') {
@@ -254,14 +254,14 @@ void Grade::insertF(node* newp)
 // Function will request what type of assignment, the name you want to give it, and the score.
 // Score format: Either in percentages (Ex: 69%) or Score/Total (Ex: 15/20)
 void Grade::addData()
-{	
+{
 	bool validInput = false;
 	string type, temp;
 	string name = "";
 	double score;
 	int in;
 
-		do 
+		do
 		{
 				//get user inputs
 			cout << "Which Type of Assignment Are Inputting?" << endl
@@ -303,11 +303,11 @@ void Grade::addData()
 
 		}while(validInput == false);
 
-		
+
 		cout << "\n\nEnter the name of the assignment: ";
 		cin.ignore();
 		getline(cin, temp);
-		
+
 		// Upper case all letters
 		for (unsigned int i = 0; i < temp.length(); i++)
 		{
@@ -349,7 +349,9 @@ void Grade::addData()
 void Grade::deleteAssignment()
 {
 	int count; // how many in the linked list of the assignment type they chose
-	node *temp;
+	node *storeNext;
+	node* temp;
+
 	cout << "Which type of assignment do you want to delete? [Enter a number]" << endl
 		 << "1. Homework" << endl
 		 << "2. Quiz" << endl
@@ -368,18 +370,39 @@ void Grade::deleteAssignment()
 	case 1:
 		count = printLL(HW);
 		temp = HW;
+		cout << "Enter the number of the assignment you would like to delete: ";
+		cin >> userInput;
+		while (userInput > count || userInput <= 0)
+		{
+			cout << "Invalid Input. Please Try Again: ";
+			cin >> userInput;
+		}
+
+		//since the assignment starts at 1, head == 1
+		if(userInput == 1)//remove the head
+		{
+			HW = temp->next;//assign the haed to the one after the head
+			delete temp;
+			break;
+		}
+
+		for(int i = 0; i <userInput-1;i++)//finding the previous node of the node to be deleted
+			temp = temp->next; //this node stores the node before the deleted node
+
+
+		storeNext = temp->next; //this stores the next node afer the targeted deleted now
+		temp->next = storeNext->next;
+		delete storeNext;
 		break;
+
 	case 2:
 		count = printLL(Quizzes);
-		temp = Quizzes;
 		break;
 	case 3:
 		count = printLL(Exams);
-		temp = Exams;
 		break;
 	case 4:
 		count = printLL(Final);
-		temp = Final;
 		break;
 	case 5:
 		return;
@@ -388,14 +411,11 @@ void Grade::deleteAssignment()
 		cout << "Invalid Input. Please Try Again." << endl;
 	}
 
-	cout << "Enter the number of the assignment you would like to delete: ";
-	cin >> userInput;
-	while (userInput > count || userInput < 0)
-	{
-		"Invalid Input. Please Try Again: ";
-		cin >> userInput;
-	}
 
+}
+
+void Grade::deleteNode(node* head)
+{
 
 }
 
@@ -409,7 +429,7 @@ void Grade::loadInfo()
 	// Used to Input Data
 	string temp;
 	string tempName;
-	
+
 	// Requesting User Input for Input File
 	cout << "Please Enter Your Student ID: ";
 	cin >> inputName;
@@ -428,7 +448,7 @@ void Grade::loadInfo()
 		getline(input, temp);
 
 		stringstream ss(temp);
-		
+
 		ss >> newNode->data.type;
 		ss >> newNode->data.name;
 		ss >> newNode->data.score;
@@ -443,7 +463,7 @@ void Grade::loadInfo()
 			case 'F': insertF(newNode); break;
 		}
 	}
-	
+
 	input.close();
 
 }
@@ -459,12 +479,12 @@ void Grade::exportInfo()
 	cout << "Please Enter Your Student ID: ";
 	cin >> name;
 
-	outFile.open(name.c_str()); 
+	outFile.open(name.c_str());
 
 	// Format: Homework --> Quiz --> Exams --> Final
 	while (temp != NULL)
 	{
-		
+
 		temp->data.name = insertDashes(temp->data.name);
 
 		outFile << temp->data << endl;
@@ -492,7 +512,7 @@ void Grade::exportInfo()
 		outFile << temp->data << endl;
 		temp = temp->next;
 	}
-	
+
 	temp = Final;
 
 	while (temp != NULL)
@@ -561,7 +581,7 @@ bool Grade::isAlpha(char c)
 }
 
 // Using stringstream for importing will store each word into a different variable after each space
-// Not wanted for Assignment Name if a space is present 
+// Not wanted for Assignment Name if a space is present
 // Changes spaces to dashes to keep the integrity of the assignment name
 string Grade::insertDashes(string name)
 {
@@ -601,9 +621,9 @@ string Grade::removeDashes(string name)
 
 // Overloading << to display Assignment Type + Name + Score
 ostream& operator<<(ostream& os, const Assignment& obj)
-{ 
+{
 	os << setw(5) << left << obj.type <<
-		setw(20) << left << obj.name << 
+		setw(20) << left << obj.name <<
 		setw(5) << left << setprecision(2) << fixed << obj.score <<"%";
 	return os;
 }
@@ -627,4 +647,3 @@ int Grade::printLL(node *head)
 
 	return count;
 }
-
