@@ -41,15 +41,16 @@ double Grade::calcExamPerc() {
 		bool dropLowest = false;
 		double lowest = temp->data.score;
 		int lowestIndex;
-		char choice = 'Z';
-		cout << "Drop lowest Exam? (Y/N): " << endl;
+		int choice;
+		cout << "Drop lowest Exam? (Enter 1 for Yes/ 0 for No): " << endl;
 		cin >> choice;
-		while (choice != 'Y' || choice != 'N') {
+
+		while (choice > 1 && choice < 0) {
 			cout << "Invalid Choice, please enter Y or N: ";
 			cin >> choice;
 		}
 
-		if (choice == 'Y')
+		if (choice == 1)
 			dropLowest = true;
 
 		while (temp != nullptr) { // Gets the index for the lowest grade
@@ -91,15 +92,15 @@ double Grade::calcHWPerc() {
 		bool dropLowest = false;
 		double lowest = temp->data.score;
 		int lowestIndex;
-		char choice = 'Z';
-		cout << "Drop lowest HW? (Y/N): " << endl;
+		int choice;
+		cout << "Drop lowest HW? (Enter 1 for Yes/ 0 for No): " << endl;
 		cin >> choice;
-		while (choice != 'Y' || choice != 'N') {
+		while (choice > 1 && choice < 0) {
 			cout << "Invalid Choice, please enter Y or N: ";
 			cin >> choice;
 		}
 
-		if (choice == 'Y')
+		if (choice == 1)
 			dropLowest = true;
 
 		while (temp != nullptr) { // Gets the index for the lowest grade
@@ -141,16 +142,16 @@ double Grade::calcQuizzesPerc() {
 		bool dropLowest = false;
 		double lowest = temp->data.score;
 		int lowestIndex;
-		char choice = 'Z';
-		cout << "Drop lowest Quiz? (Y/N): " << endl;
+		int choice;
+		cout << "Drop lowest Quiz? (Enter 1 for Yes/ 0 for No): " << endl;
 		cin >> choice;
-		while (choice != 'Y' || choice != 'N') {
+		while (choice > 1 && choice < 0) {
 			cout << "Invalid Choice, please enter Y or N: ";
 			cin >> choice;
 		}
 
-		if (choice == 'Y')
-			dropLowest = true;
+		if (choice == 1)
+					dropLowest = true;
 
 		while (temp != nullptr) { // Gets the index for the lowest grade
 			if (lowest > temp->data.score) {
