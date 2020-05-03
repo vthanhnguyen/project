@@ -396,7 +396,8 @@ void Grade::deleteAssignment()
 			cout << "Invalid Input. Please Try Again: ";
 			cin >> userInput;
 		}
-		cout << " i am in here" << endl;
+
+		cout << " i am in here" << endl; //checking if i get past the while loop
 		//since the assignment starts at 1, head == 1
 		if(userInput == 1)//remove the head
 		{
