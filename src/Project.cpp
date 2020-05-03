@@ -383,12 +383,10 @@ void Grade::deleteAssignment()
 		cin >> userInput;
 	}
 
-	switch (userInput)
-	{
+	switch (userInput) {
 	case 1:
 		count = printLL(HW);
 		temp = HW;
-
 		cout << "Enter the number of the assignment you would like to delete: ";
 		cin >> userInput;
 		while (userInput > count || userInput <= 0)
@@ -397,11 +395,10 @@ void Grade::deleteAssignment()
 			cin >> userInput;
 		}
 
-		cout << " i am in here" << endl; //checking if i get past the while loop
+		cout << "I am here" << endl;
 		//since the assignment starts at 1, head == 1
 		if(userInput == 1)//remove the head
 		{
-			cout << " i am in here" << endl;
 			HW = temp->next;//assign the haed to the one after the head
 			delete temp;
 			break;
@@ -415,7 +412,7 @@ void Grade::deleteAssignment()
 		temp->next = storeNext->next;
 		delete storeNext;
 
-		cout << "The assignment has been succesfully deleted !" << endl;
+		cout << "I have succesfully deleted the assignment" << endl;
 		break;
 
 	case 2:
@@ -679,13 +676,12 @@ int Grade::printLL(node *head)
 	int count = 1;
 	node *temp;
 	temp = head;
-	if (temp == NULL)
+
+	if (temp == nullptr)
 	{
 		cout << "The list is empty!!!";
-		return -1;
 	}
-
-	while (temp != NULL)
+	while (temp != nullptr)
 	{
 		cout << count << ". " << temp->data << endl;
 		temp = temp->next;
