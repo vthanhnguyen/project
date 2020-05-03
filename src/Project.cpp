@@ -385,26 +385,26 @@ void Grade::deleteAssignment()
 
 	switch (userInput) {
 	case 1:
+		int del;
 		count = printLL(HW);
 		temp = HW;
 		cout << "Enter the number of the assignment you would like to delete: ";
-		cin >> userInput;
-		while (userInput > count || userInput <= 0)
+		cin >> del;
+		while (del > count || del <= 0)
 		{
 			cout << "Invalid Input. Please Try Again: ";
-			cin >> userInput;
+			cin >> del;
 		}
-
-		cout << "I am here" << endl;
 		//since the assignment starts at 1, head == 1
 		if(userInput == 1)//remove the head
 		{
 			HW = temp->next;//assign the haed to the one after the head
 			delete temp;
+			cout << "Assignment Deleted." << endl;
 			break;
 		}
 
-		for(int i = 0; i <userInput-1;i++)//finding the previous node of the node to be deleted
+		for(int i = 0; i <del-1;i++)//finding the previous node of the node to be deleted
 			temp = temp->next; //this node stores the node before the deleted node
 
 
@@ -412,7 +412,7 @@ void Grade::deleteAssignment()
 		temp->next = storeNext->next;
 		delete storeNext;
 
-		cout << "I have succesfully deleted the assignment" << endl;
+		cout << "Assignment Deleted." << endl;
 		break;
 
 	case 2:
@@ -430,16 +430,6 @@ void Grade::deleteAssignment()
 	default:
 		cout << "Invalid Input. Please Try Again." << endl;
 	}
-
-	cout << "Enter the number of the assignment you would like to delete: ";
-	cin >> userInput;
-
-	while (userInput > count || userInput < 0)
-	{
-		cout << "Invalid Input. Please Try Again: ";
-		cin >> userInput;
-	}
-
 
 }
 
@@ -673,14 +663,15 @@ ostream& operator<<(ostream& os, const Assignment& obj)
 
 int Grade::printLL(node *head)
 {
-	int count = 1;
 	node *temp;
 	temp = head;
-
 	if (temp == nullptr)
-	{
-		cout << "The list is empty!!!";
-	}
+		{
+			cout << "The list is empty!!!";
+			return -1;
+		}
+	int count = 1;
+
 	while (temp != nullptr)
 	{
 		cout << count << ". " << temp->data << endl;
