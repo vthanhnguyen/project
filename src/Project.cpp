@@ -346,6 +346,59 @@ void Grade::addData()
 
 }
 
+void Grade::deleteAssignment()
+{
+	int count; // how many in the linked list of the assignment type they chose
+	node *temp;
+	cout << "Which type of assignment do you want to delete? [Enter a number]" << endl
+		 << "1. Homework" << endl
+		 << "2. Quiz" << endl
+		 << "3. Exam" << endl
+		 << "4. Final" << endl
+		 << "5. Cancel" << endl;
+	int userInput;
+	cin >> userInput;
+	while (userInput > 5 && userInput < 0)
+	{
+		cout << "That's not a valid choice, please reenter your choice:";
+		cin >> userInput;
+	}
+
+	switch (userInput) {
+	case 1:
+		count = printLL(HW);
+		temp = HW;
+		break;
+	case 2:
+		count = printLL(Quizzes);
+		temp = Quizzes;
+		break;
+	case 3:
+		count = printLL(Exams);
+		temp = Exams;
+		break;
+	case 4:
+		count = printLL(Final);
+		temp = Final;
+		break;
+	case 5:
+		return;
+
+	default:
+		cout << "Invalid Input. Please Try Again." << endl;
+	}
+
+	cout << "Enter the number of the assignment you would like to delete: ";
+	cin >> userInput;
+	while (userInput > count || userInput < 0)
+	{
+		"Invalid Input. Please Try Again: ";
+		cin >> userInput;
+	}
+
+
+}
+
 // Importing Info
 // Function: Importing Student Info w/ Text File of the Student's ID
 void Grade::loadInfo()
@@ -514,7 +567,7 @@ string Grade::insertDashes(string name)
 {
 	string temp = "";
 
-	for (int i = 0; i < name.length(); i++)
+	for (unsigned int i = 0; i < name.length(); i++)
 	{
 		if (name[i] == ' ')
 		{
@@ -533,7 +586,7 @@ string Grade::removeDashes(string name)
 {
 	string temp = "";
 
-	for (int i = 0; i < name.length(); i++)
+	for (unsigned int i = 0; i < name.length(); i++)
 	{
 		if (name[i] == '-')
 		{
@@ -554,3 +607,24 @@ ostream& operator<<(ostream& os, const Assignment& obj)
 		setw(5) << left << setprecision(2) << fixed << obj.score <<"%";
 	return os;
 }
+
+// Helpful Functions:
+int Grade::printLL(node *head)
+{
+	int count = 1;
+	node *temp;
+	temp = head;
+	while (temp != nullptr)
+		{
+			cout << count << ". " << temp->data << endl;
+			temp = temp->next;
+			count++;
+		}
+	if (temp == nullptr)
+	{
+		cout << "The list is empty!!!";
+	}
+
+	return count;
+}
+

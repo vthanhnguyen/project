@@ -86,7 +86,6 @@ int main() {
 			user.exportInfo();
 			break;
 		case 6: exit(1); break;
-	
 
 		default:
 			system("cls");

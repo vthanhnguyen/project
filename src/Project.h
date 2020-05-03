@@ -87,6 +87,9 @@ public:
 	// Inserting "-" for the spaces within the Assignment's name for stringstream
 	string insertDashes(string name);
 	string removeDashes(string name);
+
+	// Helpful Functions:
+	int printLL(node *head); // Prints linked list and returns number of items printed
 };
 
 
