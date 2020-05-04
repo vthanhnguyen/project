@@ -83,9 +83,6 @@ public:
 	void deleteExam();
 	void deleteFinal();
 
-
-	void deleteNodeFrom(int);
-
 	// Functionality: Select assignment type, which will display all assignment in that type
 	// Enter the name of the assignment to delete it from the list
 

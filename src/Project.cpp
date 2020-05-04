@@ -418,70 +418,47 @@ void Grade::deleteAssignment()
 
 void Grade::deleteHW()
 {
-	int userInput;
-	int count = printLL(HW);
-
-	deleteNodeFrom(userInput);
-}
-
-void Grade::deleteNodeFrom(int userInput)
-{
-	node* head;
-	switch (userInput) {
-		case 1:
-			head = HW;
-			break;
-		case 2:
-			head = Quizzes;
-			break;
-		case 3:
-			head = Exams;
-			break;
-		case 4:
-			head = Final;
-			break;
-		case 5:
-			return;
-	}
-	int count = printLL(head);
-	node *storeNext;
-	node* temp;
-	temp = HW;
-	cout << "Enter the number of the assignment you would like to delete: ";
-	cin >> userInput;
-	while (userInput > count || userInput <= 0)
-	{
-		cout << "Invalid Input. Please Try Again: ";
+		int userInput;
+		int count = printLL(HW);
+		node *storeNext;
+		node* temp;
+		temp = HW;
+		cout << "Enter the number of the assignment you would like to delete: ";
 		cin >> userInput;
-	}
+		while (userInput > count || userInput <= 0)
+		{
+			cout << "Invalid Input. Please Try Again: ";
+			cin >> userInput;
+		}
 
-	if(userInput == 1)// Case 1: Delete Head
-	{
-		temp = HW->next;
-		delete HW;
-		HW = temp;
-	}
-	else if(userInput < count) // Case 2: Delete anywhere in the middle
-	{
-		for(int i = 0; i <userInput-1;i++)//finding the previous node of the node to be deleted
-			temp = temp->next; //this node stores the node before the deleted node
+		if(userInput == 1)// Case 1: Delete Head
+		{
+			temp = HW->next;
+			delete HW;
+			HW = temp;
+		}
+		else if(userInput < count) // Case 2: Delete anywhere in the middle
+		{
+			for(int i = 0; i <userInput-1;i++)//finding the previous node of the node to be deleted
+				temp = temp->next; //this node stores the node before the deleted node
 
-		storeNext = temp->next->next; //this stores the next node afer the targeted deleted now
-		temp->next = storeNext;
+			storeNext = temp->next->next; //this stores the next node afer the targeted deleted now
+			temp->next = storeNext;
 
-		delete temp;
-		delete storeNext;
-	}
-	else // Case 3: Delete the tail
-	{
-		while(temp->next->next != NULL)
+			delete temp;
+			delete storeNext;
+		}
+		else // Case 3: Delete the tail
+		{
+			while(temp->next->next != NULL)
+				temp = temp->next;
 			temp = temp->next;
-		temp = temp->next;
-		temp = NULL;
-	}
-	cout << "Succesfully deleted the assignment"<<endl;
+			temp = NULL;
+		}
+		cout << "Succesfully deleted the assignment"<<endl;
 
 }
+
 
 void Grade::deleteQuiz()
 {
@@ -662,9 +639,11 @@ void Grade::deleteFinal()
 
 	cout << "Succesfully deleted the assignment: ";
 }
+}
 
 // Importing Info
 // Function: Importing Student Info w/ Text File of the Student's ID
+
 void Grade::loadInfo()
 {
 	ifstream input;
