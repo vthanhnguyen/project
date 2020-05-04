@@ -222,49 +222,62 @@ void Grade::calcGrade(){
 // Inserting Functions for Each List
 void Grade::insertHW(node* newp)
 {
+	node* traverse = HW;
 	if (HW == NULL) {
-		HW = newp;
-		newp->next = NULL;
-	} else {
-		newp->next = HW;
-		HW = newp;
-	}
+			HW = newp;
+			newp->next = NULL;
+		}
+		else {
+			while(traverse->next != NULL)
+				traverse = traverse->next; //now we have traversed to the node before NULL
+			traverse->next = newp; //assign the NULLED node to be the new Node
+			traverse->next->next = NULL; // assign the node after the new node to be NULL
+		}
 }
 
 void Grade::insertQ(node* newp)
 {
+	node* traverse = Quizzes;
 	if (Quizzes == NULL) {
-		Quizzes = newp;
-		newp->next = NULL;
-	}
-	else {
-		newp->next = Quizzes;
-		Quizzes = newp;
-	}
+			Quizzes = newp;
+			newp->next = NULL;
+		}
+		else {
+			while(traverse->next != NULL)
+				traverse = traverse->next; //now we have traversed to the node before NULL
+			traverse->next = newp; //assign the NULLED node to be the new Node
+			traverse->next->next = NULL; // assign the node after the new node to be NULL
+		}
 }
 
 void Grade::insertE(node* newp)
 {
+	node* traverse = Exams;
 	if (Exams == NULL) {
-		Exams = newp;
-		newp->next = NULL;
-	}
-	else {
-		newp->next = Exams;
-		Exams = newp;
-	}
+			Exams = newp;
+			newp->next = NULL;
+		}
+		else {
+			while(traverse->next != NULL)
+				traverse = traverse->next; //now we have traversed to the node before NULL
+			traverse->next = newp; //assign the NULLED node to be the new Node
+			traverse->next->next = NULL; // assign the node after the new node to be NULL
+		}
 }
 
 void Grade::insertF(node* newp)
 {
+	node* traverse = Final;
 	if (Final == NULL) {
-		Final = newp;
-		newp->next = NULL;
-	}
-	else {
-		newp->next = Final;
-		Final = newp;
-	}
+			Final = newp;
+			newp->next = NULL;
+		}
+		else {
+			while(traverse->next != NULL)
+				traverse = traverse->next; //now we have traversed to the node before NULL
+			traverse->next = newp; //assign the NULLED node to be the new Node
+			traverse->next->next = NULL; // assign the node after the new node to be NULL
+		}
 }
 
 // Adds the data to the correct spot and appends it to the file
@@ -381,17 +394,17 @@ void Grade::deleteAssignment()
 
 	switch (userInput) {
 	case 1:
-		deleteNode(HW,userInput);
+		deleteHW();
 		break;
 
 	case 2:
-		deleteNode(Quizzes,userInput);
+		deleteQuiz();
 		break;
 	case 3:
-		deleteNode(Exams,userInput);
+		deleteExam();
 		break;
 	case 4:
-		deleteNode(Final,userInput);
+		deleteFinal();
 		break;
 	case 5:
 		return;
@@ -402,12 +415,13 @@ void Grade::deleteAssignment()
 
 }
 
-void Grade::deleteNode(node* head, int userInput)
+void Grade::deleteHW()
 {
-	int count = printLL(head);
+	int userInput;
+	int count = printLL(HW);
 	node *storeNext;
 	node* temp;
-	temp = head;
+	temp = HW;
 	cout << "Enter the number of the assignment you would like to delete: ";
 	cin >> userInput;
 	while (userInput > count || userInput <= 0)
@@ -418,16 +432,62 @@ void Grade::deleteNode(node* head, int userInput)
 
 	if(userInput == 1)// Case 1: Delete Head
 	{
-		head = temp->next;//assign the haed to the one after the head
-		delete temp;
+		temp = HW->next;
+		delete HW;
+		HW = temp;
 	}
 	else if(userInput < count) // Case 2: Delete anywhere in the middle
 	{
-		for(int i = 0; i <userInput;i++)//finding the previous node of the node to be deleted
+		for(int i = 0; i <userInput-1;i++)//finding the previous node of the node to be deleted
 			temp = temp->next; //this node stores the node before the deleted node
 
-		storeNext = temp->next; //this stores the next node afer the targeted deleted now
-		temp->next = storeNext->next;
+		storeNext = temp->next->next; //this stores the next node afer the targeted deleted now
+		temp->next = storeNext;
+
+		delete temp;
+		delete storeNext;
+	}
+	else // Case 3: Delete the tail
+	{
+		while(temp->next->next != NULL)
+			temp = temp->next;
+		temp = temp->next;
+		temp = NULL;
+	}
+	cout << "Succesfully deleted the assignment"<<endl;
+
+}
+
+void Grade::deleteQuiz()
+{
+	int userInput;
+	int count = printLL(Quizzes);
+	node *storeNext;
+	node* temp;
+	temp = Quizzes;
+	cout << "Enter the number of the assignment you would like to delete: ";
+	cin >> userInput;
+	while (userInput > count || userInput <= 0)
+	{
+		cout << "Invalid Input. Please Try Again: ";
+		cin >> userInput;
+	}
+
+	if(userInput == 1)// Case 1: Delete Head
+	{
+		temp = Quizzes->next;
+		delete Quizzes;
+		Quizzes = temp;
+	}
+	else if(userInput < count) // Case 2: Delete anywhere in the middle
+	{
+		for(int i = 0; i <userInput-1;i++)//finding the previous node of the node to be deleted
+			temp = temp->next; //this node stores the node before the deleted node
+
+		storeNext = temp->next->next; //this stores the next node afer the targeted deleted now
+		temp->next = storeNext;
+
+		delete temp;
 		delete storeNext;
 	}
 	else // Case 3: Delete the tail
@@ -438,7 +498,97 @@ void Grade::deleteNode(node* head, int userInput)
 		temp = NULL;
 	}
 
-	cout << "I have succesfully deleted the assignment" << endl;
+
+	cout << "Succesfully deleted the assignment: ";
+
+}
+void Grade::deleteExam()
+{
+	int userInput;
+	int count = printLL(Exams);
+	node *storeNext;
+	node* temp;
+	temp = Exams;
+	cout << "Enter the number of the assignment you would like to delete: ";
+	cin >> userInput;
+	while (userInput > count || userInput <= 0)
+	{
+		cout << "Invalid Input. Please Try Again: ";
+		cin >> userInput;
+	}
+
+	if(userInput == 1)// Case 1: Delete Head
+	{
+		temp = Exams->next;
+		delete Exams;
+		Exams = temp;
+	}
+	else if(userInput < count) // Case 2: Delete anywhere in the middle
+	{
+		for(int i = 0; i <userInput-1;i++)//finding the previous node of the node to be deleted
+			temp = temp->next; //this node stores the node before the deleted node
+
+		storeNext = temp->next->next; //this stores the next node afer the targeted deleted now
+		temp->next = storeNext;
+
+		delete temp;
+		delete storeNext;
+	}
+	else // Case 3: Delete the tail
+	{
+		while(temp->next->next != NULL)
+			temp = temp->next;
+		temp = temp->next;
+		temp = NULL;
+	}
+
+
+	cout << "Succesfully deleted the assignment: ";
+
+}
+void Grade::deleteFinal()
+{
+	int userInput;
+	int count = printLL(Final);
+	node *storeNext;
+	node* temp;
+	temp = Final;
+	cout << "Enter the number of the assignment you would like to delete: ";
+	cin >> userInput;
+	while (userInput > count || userInput <= 0)
+	{
+		cout << "Invalid Input. Please Try Again: ";
+		cin >> userInput;
+	}
+
+	if(userInput == 1)// Case 1: Delete Head
+	{
+		temp = Final->next;
+		delete Final;
+		Final = temp;
+	}
+	else if(userInput < count) // Case 2: Delete anywhere in the middle
+	{
+		for(int i = 0; i <userInput-1;i++)//finding the previous node of the node to be deleted
+			temp = temp->next; //this node stores the node before the deleted node
+
+		storeNext = temp->next->next; //this stores the next node afer the targeted deleted now
+		temp->next = storeNext;
+
+		delete temp;
+		delete storeNext;
+	}
+	else // Case 3: Delete the tail
+	{
+		while(temp->next->next != NULL)
+			temp = temp->next;
+		temp = temp->next;
+		temp = NULL;
+	}
+
+
+	cout << "Succesfully deleted the assignment: ";
+
 }
 
 // Importing Info
@@ -515,8 +665,6 @@ void Grade::exportInfo()
 
 		outFile << temp->data << endl;
 		temp = temp->next;
-
-
 	}
 
 	temp = Quizzes;
@@ -656,8 +804,8 @@ ostream& operator<<(ostream& os, const Assignment& obj)
 */
 {
 	os << setw(10) << left << obj.type <<
-		setw(30) << left << obj.name << 
-		setw(6) << left << setprecision(2) << fixed << obj.score <<"%";
+		setw(20) << left << obj.name <<
+		setw(6) << left << setprecision(1) << fixed << obj.score <<"%";
 
 	return os;
 }
@@ -672,8 +820,9 @@ int Grade::printLL(node *head)
 
 	if (temp == nullptr)
 	{
-		cout << "The list is empty!!!";
+		cout << "The list is empty!!!\n";
 	}
+	cout << endl;
 	while (temp != nullptr)
 	{
 		cout << count << ". " << temp->data << endl;

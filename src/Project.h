@@ -11,6 +11,7 @@
 #include <iomanip>
 #include <string>
 #include <sstream>
+#include <cstdlib>
 
 using namespace std;
 
@@ -49,7 +50,7 @@ private: // Each of these nodes are the head pointer of their respective assignm
 public:
 	Grade(); // Constructor
 
-	bool isAlpha(char); // Upper case all the letters for Assignment Type/Name 
+	bool isAlpha(char); // Upper case all the letters for Assignment Type/Name
 
 	double calcExamPerc(); // Calculates the total percentage of exams | There will be an option to set a flag for dropping the lowest score
 	double calcHWPerc(); // Calculates the total percentage of Homework
@@ -76,7 +77,11 @@ public:
 	// Displays User report
 
 	void deleteAssignment();
-	void deleteNode(node*, int );
+	void deleteHW();
+	void deleteQuiz();
+	void deleteExam();
+	void deleteFinal();
+
 	// Functionality: Select assignment type, which will display all assignment in that type
 	// Enter the name of the assignment to delete it from the list
 
@@ -84,7 +89,7 @@ public:
 	void insertQ(node* newp); // Used for inserting nodes into the linked list
 	void insertE(node* newp); // Used for inserting nodes into the linked list
 	void insertF(node* newp); // Used for inserting nodes into the linked list
-	
+
 	// Inserting "-" for the spaces within the Assignment's name for stringstream
 	string insertDashes(string name);
 	string removeDashes(string name);
