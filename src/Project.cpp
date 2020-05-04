@@ -379,13 +379,15 @@ void Grade::addData()
 void Grade::deleteAssignment()
 {
 	cout << "Which type of assignment do you want to delete? [Enter a number]" << endl
-		 << "1. Homework" << endl
-		 << "2. Quiz" << endl
-		 << "3. Exam" << endl
-		 << "4. Final" << endl
-		 << "5. Cancel" << endl;
+		<< "1. Homework" << endl
+		<< "2. Quiz" << endl
+		<< "3. Exam" << endl
+		<< "4. Final" << endl
+		<< "5. Cancel" << endl
+		<< "\nUser Input: ";
 	int userInput;
 	cin >> userInput;
+
 	while (userInput > 5 && userInput < 0)
 	{
 		cout << "That's not a valid choice, please reenter your choice:";
@@ -420,10 +422,11 @@ void Grade::deleteHW()
 {
 		int userInput;
 		int count = printLL(HW);
-		node *storeNext;
-		node* temp;
+		node *storeNext = new node;
+		node* temp = new node;
+		node* temp2 = new node;
 		temp = HW;
-		cout << "Enter the number of the assignment you would like to delete: ";
+		cout << "Enter the associated number of the assignment to delete: ";
 		cin >> userInput;
 		while (userInput > count || userInput <= 0)
 		{
@@ -439,14 +442,15 @@ void Grade::deleteHW()
 		}
 		else if(userInput < count) // Case 2: Delete anywhere in the middle
 		{
-			for(int i = 0; i <userInput-1;i++)//finding the previous node of the node to be deleted
+			for(int i = 0; i <userInput-2;i++)//finding the previous node of the node to be deleted
 				temp = temp->next; //this node stores the node before the deleted node
 
 			storeNext = temp->next->next; //this stores the next node afer the targeted deleted now
+			temp2 = temp->next;
 			temp->next = storeNext;
 
-			delete temp;
-			delete storeNext;
+			delete temp2;
+
 		}
 		else // Case 3: Delete the tail
 		{
@@ -464,10 +468,11 @@ void Grade::deleteQuiz()
 {
 	int userInput;
 	int count = printLL(Quizzes);
-	node *storeNext;
-	node* temp;
+	node* storeNext = new node;
+	node* temp = new node;
+	node* temp2 = new node;
 	temp = Quizzes;
-	cout << "Enter the number of the assignment you would like to delete: ";
+	cout << "Enter the associated number of the assignment to delete: ";
 	cin >> userInput;
 	while (userInput > count || userInput <= 0)
 	{
@@ -483,14 +488,14 @@ void Grade::deleteQuiz()
 	}
 	else if(userInput < count) // Case 2: Delete anywhere in the middle
 	{
-		for(int i = 0; i <userInput-1;i++)//finding the previous node of the node to be deleted
+		for(int i = 0; i <userInput-2;i++)//finding the previous node of the node to be deleted
 			temp = temp->next; //this node stores the node before the deleted node
 
 		storeNext = temp->next->next; //this stores the next node afer the targeted deleted now
+		temp2 = temp->next;
 		temp->next = storeNext;
 
-		delete temp;
-		delete storeNext;
+		delete temp2;
 	}
 	else // Case 3: Delete the tail
 	{
@@ -508,10 +513,11 @@ void Grade::deleteExam()
 {
 	int userInput;
 	int count = printLL(Exams);
-	node *storeNext;
-	node* temp;
+	node* storeNext = new node;
+	node* temp = new node;
+	node* temp2 = new node;
 	temp = Exams;
-	cout << "Enter the number of the assignment you would like to delete: ";
+	cout << "Enter the associated number of the assignment to delete: ";
 	cin >> userInput;
 	while (userInput > count || userInput <= 0)
 	{
@@ -528,14 +534,14 @@ void Grade::deleteExam()
 	}
 	else if(userInput < count) // Case 2: Delete anywhere in the middle
 	{
-		for(int i = 0; i <userInput-1;i++)//finding the previous node of the node to be deleted
+		for(int i = 0; i <userInput-2;i++)//finding the previous node of the node to be deleted
 			temp = temp->next; //this node stores the node before the deleted node
 
 		storeNext = temp->next->next; //this stores the next node afer the targeted deleted now
+		temp2 = temp->next;
 		temp->next = storeNext;
 
-		delete temp;
-		delete storeNext;
+		delete temp2;
 	}
 	else // Case 3: Delete the tail
 	{
@@ -553,10 +559,11 @@ void Grade::deleteFinal()
 {
 	int userInput;
 	int count = printLL(Final);
-	node *storeNext;
-	node* temp;
+	node* storeNext = new node;
+	node* temp = new node;
+	node* temp2 = new node;
 	temp = Final;
-	cout << "Enter the number of the assignment you would like to delete: ";
+	cout << "Enter the associated number of the assignment to delete: ";
 	cin >> userInput;
 	while (userInput > count || userInput <= 0)
 	{
@@ -572,11 +579,14 @@ void Grade::deleteFinal()
 	}
 	else if(userInput < count) // Case 2: Delete anywhere in the middle
 	{
-		for(int i = 0; i <userInput-1;i++)//finding the previous node of the node to be deleted
+		for(int i = 0; i <userInput-2;i++)//finding the previous node of the node to be deleted
 			temp = temp->next; //this node stores the node before the deleted node
 
 		storeNext = temp->next->next; //this stores the next node afer the targeted deleted now
+		temp2 = temp->next;
 		temp->next = storeNext;
+
+		delete temp2;
 
 		delete temp;
 
@@ -620,7 +630,7 @@ void Grade::deleteFinal()
 	}
 	else if(userInput < count) // Case 2: Delete anywhere in the middle
 	{
-		for(int i = 1; i <userInput-1;i++)//finding the previous node of the node to be deleted
+		for(int i = 1; i <userInput-2;i++)//finding the previous node of the node to be deleted
 			temp = temp->next; //this node stores the node before the deleted node
 
 		storeNext = temp->next; //this stores the next node after the targeted deleted now

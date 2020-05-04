@@ -1,0 +1,12 @@
+HW        Ch-1                          100.00%
+HW        Ch-2                          100.00%
+HW        Ch-3                          100.00%
+HW        Ch-4                          100.00%
+HW        Ch-5                          100.00%
+QUIZ      Ch-1                          100.00%
+QUIZ      Ch-2                          100.00%
+QUIZ      Ch-3                          100.00%
+QUIZ      Ch-4                          100.00%
+QUIZ      Ch-5                          100.00%
+EXAM      MIDETERM-1                    100.00%
+FINAL     FINAL                         0.00  %

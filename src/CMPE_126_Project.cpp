@@ -45,6 +45,8 @@ int main() {
 			cout << "Invalid Input. Please Try Again." << endl;
 			system("pause");
 		}
+		system("cls");
+
 	} while (validInput == false);
 
 	// Menu 2 --> User can add, delete, or display all the currnet assignments they have on file.
@@ -92,8 +94,8 @@ int main() {
 			cout << "Invalid Input. Please Try Again." << endl;
 			system("pause");
 		}
-
 		system("cls");
+
 	} while (true);
 
 	
