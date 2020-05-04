@@ -385,10 +385,10 @@ void Grade::deleteAssignment()
 		break;
 
 	case 2:
-		deleteNode(Exams,userInput);
+		deleteNode(Quizzes,userInput);
 		break;
 	case 3:
-		deleteNode(Quizzes,userInput);
+		deleteNode(Exams,userInput);
 		break;
 	case 4:
 		deleteNode(Final,userInput);
