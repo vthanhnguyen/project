@@ -76,7 +76,7 @@ public:
 	// Displays User report
 
 	void deleteAssignment();
-	void deleteNode(node*, int );
+	void deleteNodeFrom(int);
 	// Functionality: Select assignment type, which will display all assignment in that type
 	// Enter the name of the assignment to delete it from the list
 

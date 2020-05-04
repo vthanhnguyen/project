@@ -379,31 +379,28 @@ void Grade::deleteAssignment()
 		cin >> userInput;
 	}
 
-	switch (userInput) {
-	case 1:
-		deleteNode(HW,userInput);
-		break;
-
-	case 2:
-		deleteNode(Exams,userInput);
-		break;
-	case 3:
-		deleteNode(Quizzes,userInput);
-		break;
-	case 4:
-		deleteNode(Final,userInput);
-		break;
-	case 5:
-		return;
-
-	default:
-		cout << "Invalid Input. Please Try Again." << endl;
-	}
-
+	deleteNodeFrom(userInput);
 }
 
-void Grade::deleteNode(node* head, int userInput)
+void Grade::deleteNodeFrom(int userInput)
 {
+	node* head;
+	switch (userInput) {
+		case 1:
+			head = HW;
+			break;
+		case 2:
+			head = Quizzes;
+			break;
+		case 3:
+			head = Exams;
+			break;
+		case 4:
+			head = Final;
+			break;
+		case 5:
+			return;
+	}
 	int count = printLL(head);
 	node *storeNext;
 	node* temp;
@@ -416,17 +413,50 @@ void Grade::deleteNode(node* head, int userInput)
 		cin >> userInput;
 	}
 
-	if(userInput == 1)// Case 1: Delete Head
-	{
-		head = temp->next;//assign the haed to the one after the head
-		delete temp;
+	if (userInput == 1) { // Case 1: Delete Head
+		if (count == 1) {
+			switch (userInput) {
+			case 1:
+				HW = nullptr;
+				break;
+			case 2:
+				Quizzes = nullptr;
+				break;
+			case 3:
+				Exams = nullptr;
+				break;
+			case 4:
+				Final = nullptr;
+				break;
+			case 5:
+				return;
+			}
+		} else {
+			switch (userInput) {
+			case 1:
+				HW = HW->next;
+				break;
+			case 2:
+				Quizzes = Quizzes->next;
+				break;
+			case 3:
+				Exams = Exams->next;
+				break;
+			case 4:
+				Final = Final->next;
+				break;
+			case 5:
+				return;
+			}
+			delete temp;
+		}
 	}
 	else if(userInput < count) // Case 2: Delete anywhere in the middle
 	{
-		for(int i = 0; i <userInput-1;i++)//finding the previous node of the node to be deleted
+		for(int i = 1; i <userInput-1;i++)//finding the previous node of the node to be deleted
 			temp = temp->next; //this node stores the node before the deleted node
 
-		storeNext = temp->next; //this stores the next node afer the targeted deleted now
+		storeNext = temp->next; //this stores the next node after the targeted deleted now
 		temp->next = storeNext->next;
 		delete storeNext;
 	}
@@ -438,7 +468,7 @@ void Grade::deleteNode(node* head, int userInput)
 		temp = NULL;
 	}
 
-	cout << "I have succesfully deleted the assignment" << endl;
+	cout << "I have successfully deleted the assignment" << endl;
 }
 
 // Importing Info
