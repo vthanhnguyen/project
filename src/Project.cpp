@@ -407,7 +407,7 @@ void Grade::deleteNode(node* head, int userInput)
 	int count = printLL(head);
 	node *storeNext;
 	node* temp;
-	temp = HW;
+	temp = head;
 	cout << "Enter the number of the assignment you would like to delete: ";
 	cin >> userInput;
 	while (userInput > count || userInput <= 0)
@@ -416,10 +416,9 @@ void Grade::deleteNode(node* head, int userInput)
 		cin >> userInput;
 	}
 
-
 	if(userInput == 1)// Case 1: Delete Head
 	{
-		HW = temp->next;//assign the haed to the one after the head
+		head = temp->next;//assign the haed to the one after the head
 		delete temp;
 	}
 	else if(userInput < count) // Case 2: Delete anywhere in the middle
