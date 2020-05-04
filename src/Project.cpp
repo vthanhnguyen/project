@@ -365,8 +365,6 @@ void Grade::addData()
 
 void Grade::deleteAssignment()
 {
-	int count; // how many in the linked list of the assignment type they chose
-
 	cout << "Which type of assignment do you want to delete? [Enter a number]" << endl
 		 << "1. Homework" << endl
 		 << "2. Quiz" << endl
@@ -401,16 +399,6 @@ void Grade::deleteAssignment()
 	default:
 		cout << "Invalid Input. Please Try Again." << endl;
 	}
-
-	cout << "Enter the number of the assignment you would like to delete: ";
-	cin >> userInput;
-
-	while (userInput > count || userInput < 0)
-	{
-		cout << "Invalid Input. Please Try Again: ";
-		cin >> userInput;
-	}
-
 
 }
 
