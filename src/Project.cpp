@@ -423,7 +423,7 @@ void Grade::deleteNode(node* head, int userInput)
 	}
 	else if(userInput < count) // Case 2: Delete anywhere in the middle
 	{
-		for(int i = 0; i <userInput-1;i++)//finding the previous node of the node to be deleted
+		for(int i = 0; i <userInput;i++)//finding the previous node of the node to be deleted
 			temp = temp->next; //this node stores the node before the deleted node
 
 		storeNext = temp->next; //this stores the next node afer the targeted deleted now
